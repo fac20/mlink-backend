@@ -41,26 +41,26 @@ CREATE TABLE workplace_list (
 
 
 INSERT INTO workplace_list (workplace) VALUES
-('Airedale NHS Foundation Trust')
-('Alder Hey Children''s NHS Foundation Trust')
-('Ashford and St Peter''s Hospitals NHS Foundation Trust')
-('Avon and Wiltshire Mental Health Partnership NHS Trust')
-('Barking, Havering and Redbridge University Hospitals NHS Trust')
-('Barnet, Enfield and Haringey Mental Health NHS Trust')
-('Barnsley Hospital NHS Foundation Trust')
-('Barts Health NHS Trust')
-('Bedford Hospital NHS Trust')
-('Berkshire Healthcare NHS Foundation Trust')
-('Birmingham and Solihull Mental Health NHS Foundation Trust')
-('Birmingham Community Healthcare NHS Foundation Trust')
-('Birmingham Women''s and Children''s NHS Foundation Trust')
-('Black Country Healthcare NHS Foundation Trust')
-('Blackpool Teaching Hospitals NHS Foundation Trust')
-('Bolton NHS Foundation Trust')
-('Bradford District NHS Foundation Trust')
-('Bradford Teaching Hospitals NHS Foundation Trust')
-('Bridgewater Community Healthcare NHS Foundation Trust')
-('Brighton and Sussex University Hospitals NHS Trust')
+('Airedale NHS Foundation Trust'),
+('Alder Hey Children''s NHS Foundation Trust'),
+('Ashford and St Peter''s Hospitals NHS Foundation Trust'),
+('Avon and Wiltshire Mental Health Partnership NHS Trust'),
+('Barking, Havering and Redbridge University Hospitals NHS Trust'),
+('Barnet, Enfield and Haringey Mental Health NHS Trust'),
+('Barnsley Hospital NHS Foundation Trust'),
+('Barts Health NHS Trust'),
+('Bedford Hospital NHS Trust'),
+('Berkshire Healthcare NHS Foundation Trust'),
+('Birmingham and Solihull Mental Health NHS Foundation Trust'),
+('Birmingham Community Healthcare NHS Foundation Trust'),
+('Birmingham Women''s and Children''s NHS Foundation Trust'),
+('Black Country Healthcare NHS Foundation Trust'),
+('Blackpool Teaching Hospitals NHS Foundation Trust'),
+('Bolton NHS Foundation Trust'),
+('Bradford District NHS Foundation Trust'),
+('Bradford Teaching Hospitals NHS Foundation Trust'),
+('Bridgewater Community Healthcare NHS Foundation Trust'),
+('Brighton and Sussex University Hospitals NHS Trust'),
 ('Buckinghamshire Healthcare NHS Trust')
 ('Burton Hospitals NHS Foundation Trust')
 ('Calderdale and Huddersfield NHS Foundation Trust')
