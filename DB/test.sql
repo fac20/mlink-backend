@@ -46,11 +46,25 @@ CREATE TABLE titles_list (
 );
 -- T&K
 
+INSERT INTO titles_list (title) VALUES (
+    ('Dr'),
+    ('Prof'),
+    ('Mr'),
+    ('Miss'),
+    ('Ms'),
+);
+
 CREATE TABLE degree_titles_list(
     ID int NOT NULL PRIMARY KEY,
     degree_title VARCHAR(255)
 );
 -- T&K
+INSERT INTO degree_titles_list (degree_title) VALUES (
+    ('MBChB'),
+    ('BM BCh'),
+    ('BMBS'),
+    ('MBBS')
+);
 
 CREATE TABLE medical_schools_list(
     ID int NOT NULL PRIMARY KEY,
@@ -60,9 +74,34 @@ CREATE TABLE medical_schools_list(
 
 CREATE TABLE postgrad_exams_list(
     ID int NOT NULL PRIMARY KEY,
-    postgra_exam VARCHAR(255) 
+    postgrad_exam VARCHAR(255) 
 );
 --T&K
+INSERT INTO postgrad_exams_list (postgrad_exam) VALUES
+(
+    ('FRCA'),
+    ('MCEM'),
+    ('nMRCGP'),
+    ('MRCOG'),
+    ('MFOM'),
+    ('MRCOphth'),
+    ('MRCPCH'),
+    ('FRCPath'),
+    ('MRCP'),
+    ('MRCPsych'),
+    ('MFPH'),
+    ('FRCR'),
+    ('MRCS'),
+    ('FRCS'),
+    ('FRCEM'),
+    ('FRCGP'),
+    ('FRCOG'),
+    ('FRCOphth'),
+    ('FRCPCH'),
+    ('FRCP'),
+    ('FRCPsych'),
+    
+);
 
 CREATE TABLE postgrad_exam_institutions_list(
     ID int NOT NULL PRIMARY KEY,
