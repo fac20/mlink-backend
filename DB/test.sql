@@ -15079,4 +15079,4 @@ INSERT INTO users (title, fullname, phone_number, current_job_title, current_job
     ('DR', 'Joe Bloggs', 07740234556, 'Surgeon', 'West Suffolk NHS Foundation Trust', 'Jan-08-2020', 'Clinical radiology', '{GP}', '{Jan-08-2018}', '{Jan-07-2020}',
     'Clinical oncology', 'MBChB', 'Queen Mary (Barts)', 'Jan-08-2010', 'Jan-08-2015',
     '{BMBS, BMBCH}','{1999-01-08, 2000-01-08}', '{Bedford Hospital NHS Trust}', 'London', '{Anaesthesia, Audiovestibular medicine}', 'email', TRUE, FALSE, '{}', '{Tony Miles}', 'doctor with a keen interest in collaborating on research', 76895438
-    );
+);
