@@ -11,7 +11,7 @@ CREATE TABLE users (
     current_job_workplace int FOREIGN KEY REFERENCES workplace_list(ID),
     current_job_start DATE,
     current_job_speciality int FOREIGN KEY REFERENCES specialities(ID),
-    previous_job_titles VARCHAR(255) ARRAY,
+    previous_job_titles VARCHAR(255)ARRAY,
     previous_job_start DATE ARRAY,
     previous_job_end DATE ARRAY,
     previous_job_speciality int FOREIGN KEY REFERENCES specialities(ID),
@@ -74,29 +74,44 @@ CREATE TABLE specialities(
     speciality VARCHAR(255)
 )
 
+
 CREATE TABLE workplace_list (
     ID int NOT NULL PRIMARY KEY,
     workplace VARCHAR(255)
 );
--- A&S
+
 
 CREATE TABLE titles_list (
     ID int NOT NULL PRIMARY KEY,
     title VARCHAR(255)
 );
--- T&K
+
+
+INSERT INTO titles_list (title) VALUES (
+    ('Dr'),
+    ('Prof'),
+    ('Mr'),
+    ('Miss'),
+    ('Ms'),
+);
 
 CREATE TABLE degree_titles_list(
     ID int NOT NULL PRIMARY KEY,
     degree_title VARCHAR(255)
 );
--- T&K
+
+INSERT INTO degree_titles_list (degree_title) VALUES (
+    ('MBChB'),
+    ('BM BCh'),
+    ('BMBS'),
+    ('MBBS')
+);
 
 CREATE TABLE medical_schools_list(
     ID int NOT NULL PRIMARY KEY,
     medical_school VARCHAR(255)
 );
---A&S
+
 
 INSERT INTO medical_schools_list(
         ('Anglia Ruskin University School of Medicine, United Kingdom of Great Britain and Northern Ireland'),
@@ -1151,15 +1166,40 @@ INSERT INTO medical_schools_list(
 
 CREATE TABLE postgrad_exams_list(
     ID int NOT NULL PRIMARY KEY,
-    postgra_exam VARCHAR(255) 
+    postgrad_exam VARCHAR(255) 
 );
---T&K
+
+INSERT INTO postgrad_exams_list (postgrad_exam) VALUES
+(
+    ('FRCA'),
+    ('MCEM'),
+    ('nMRCGP'),
+    ('MRCOG'),
+    ('MFOM'),
+    ('MRCOphth'),
+    ('MRCPCH'),
+    ('FRCPath'),
+    ('MRCP'),
+    ('MRCPsych'),
+    ('MFPH'),
+    ('FRCR'),
+    ('MRCS'),
+    ('FRCS'),
+    ('FRCEM'),
+    ('FRCGP'),
+    ('FRCOG'),
+    ('FRCOphth'),
+    ('FRCPCH'),
+    ('FRCP'),
+    ('FRCPsych'),
+    
+);
 
 CREATE TABLE postgrad_exam_institutions_list(
     ID int NOT NULL PRIMARY KEY,
     postgrad_exam_institution VARCHAR(255) 
 );
---A&S
+
 
 INSERT INTO postgrad_exam_institutions_list(
     ('Faculty of Dental Surgery'),
@@ -1186,6 +1226,81 @@ INSERT INTO postgrad_exam_institutions_list(
     ('Royal College of Surgeons of England'),
     ('\NOT ADDED YET'),
 )
+CREATE TABLE specialities (
+    ID int NOT NULL PRIMARY KEY,
+    speciality VARCHAR(255)
+);
+
+INSERT INTO specialities (speciality) VALUES (
+    ('Anaesthesia'),
+    ('Clinical oncology'),
+    ('Clinical radiology'),
+    ('Community sexual and reproductive health'),
+    ('Emergency medicine'),
+    ('General practice (GP)'),
+    ('Intensive care medicine'),
+    ('Medicine'),
+    ('Acute internal medicine'),
+    ('Allergy'),
+    ('Audiovestibular medicine'),
+    ('Cardiology'),
+    ('Clinical Genetics'),
+    ('Clinical neurophysiology'),
+    ('Clinical pharmacology and therapeutics'),
+    ('Dermatology'),
+    ('Endocrinology and diabetes'),
+    ('Gastroenterology'),
+    ('General internal medicine'),
+    ('Genitourinary medicine'),
+    ('Geriatric medicine'),
+    ('Immunology'),
+    ('Infectious diseases'),
+    ('Medical oncology'),
+    ('Medical ophthalmology'),
+    ('Neurology'),
+    ('Nuclear Medicine'),
+    ('Palliative medicine'),
+    ('Pharmaceutical medicine'),
+    ('Rehabilitation medicine'),
+    ('Renal medicine'),
+    ('Respiratory medicine'),
+    ('Rheumatology'),
+    ('Sport and exercise medicine'),
+    ('Stroke medicine'),
+    ('Tropical medicine'),
+    ('Obstetrics and gynaecology'),
+    ('Occupational medicine'),
+    ('Ophthalmology'),
+    ('Paediatrics'),
+    ('Paediatric cardiology'),
+    ('Paediatrics'),
+    ('Pathology'),
+    ('Chemical pathology'),
+    ('Haematology'),
+    ('Histopathology'),
+    ('Medical microbiology and virology'),
+    ('Psychiatry'),
+    ('Child and adolescent psychiatry'),
+    ('Forensic psychiatry'),
+    ('General psychiatry'),
+    ('Liaison psychiatry'),
+    ('Medical psychotherapy'),
+    ('Old age psychiatry'),
+    ('Psychiatry of intellectual disability'),
+    ('Public Health'),
+    ('Surgery'),
+    ('Cardiothoracic surgery'),
+    ('General surgery'),
+    ('Neurosurgery'),
+    ('Oral and maxillofacial surgery'),
+    ('Otorhinolaryngology (ear, nose and throat surgery)'),
+    ('Paediatric surgery'),
+    ('Plastic surgery'),
+    ('Trauma and orthopaedic surgery'),
+    ('Urology'),
+    ('Vascular surgery'),
+);
+
 
 INSERT INTO workplace_list (workplace) VALUES 
 (
@@ -16045,11 +16160,13 @@ INSERT INTO workplace_list (workplace) VALUES
     ('BEACON PARK HOSPITAL, STAFFORD'),
     ('HERTFORD & RURALS PCN HUB, HERTFORD'),
     ('AIREDALE AND CRAVEN EIP, KEIGHLEY')
+
 );
 
 
 INSERT INTO users (title, fullname, phone_number, current_job_title, current_job_workplace,current_job_start,
-    current_job_speciality, previous_job_titles,
+    current_job_speciality,
+    previous_job_titles,
     previous_job_start,
     previous_job_end,
     previous_job_speciality,
@@ -16069,7 +16186,7 @@ INSERT INTO users (title, fullname, phone_number, current_job_title, current_job
     connection_requests,
     bio,
     gmc_number) VALUES
-    (1, 'Tony Miles', 07740234556, 'Surgeon', 3, 'Jan-08-2020', 4, '{GP}', '{Jan-08-2018}', '{Jan-07-2020}',
+        (1, 'Tony Miles', 07740234556, 'Surgeon', 3, 'Jan-08-2020', 4, '{GP}', '{Jan-08-2018}', '{Jan-07-2020}',
     4, 2, 5, 'Jan-08-2010', 'Jan-08-2015','{BMBS, BMBCH}','{1999-01-08, 2000-01-08}', '{Bedford Hospital NHS Trust}', 'London', '{Anaesthesia, Audiovestibular medicine}', 'email', true, true, '{Sarah Jones}', '{}', 'doctor with a keen interest in collaborating on research', 76895438
     ),
     ('DR', 'Sarah Jones', 07740234556, 'Surgeon', 'West Suffolk NHS Foundation Trust', 'Jan-08-2020', 'Clinical radiology', '{GP}','{Jan-08-2018}', '{Jan-07-2020}',
