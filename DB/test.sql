@@ -1,12 +1,12 @@
 BEGIN;
 
-DROP TABLE IF EXISTS users, CASCADE;
+DROP TABLE IF EXISTS users, job_titles, workplace_list, titles_list, degree_titles_list, medical_schools_list, postgrad_exam_institutions_list, postgrad_expostgrad_exams_list, specialities  CASCADE;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     fullname VARCHAR(255) NOT NULL,
     title int FOREIGN KEY REFERENCES titles_list(ID),
-    phone_number INTEGER,
+    phone_number int,
     current_job_title int FOREIGN KEY REFERENCES job_titles(ID),
     current_job_workplace int FOREIGN KEY REFERENCES workplace_list(ID),
     current_job_start DATE,
@@ -30,13 +30,13 @@ CREATE TABLE users (
     connections VARCHAR(255) ARRAY,
     connection_requests VARCHAR(255) ARRAY,
     bio VARCHAR(255),
-    gmc_number INTEGER
+    gmc_number int
 );
 
 CREATE TABLE job_titles (
     ID int NOT NULL PRIMARY KEY,
     job_title VARCHAR(255)
-)
+);
 
 INSERT INTO job_titles(job_title) VALUES (
     ('FY 1'),
@@ -66,14 +66,8 @@ INSERT INTO job_titles(job_title) VALUES (
     ('CT 3'),
     ('Out-of-training Doctor'),
     ('Non-clinical Doctor'),
-    ('\NOT ENTERED YET'),
-)
-
-CREATE TABLE specialities(
-    ID int NOT NULL PRIMARY KEY,
-    speciality VARCHAR(255)
-)
-
+    ('\NOT ENTERED YET')
+);
 
 CREATE TABLE workplace_list (
     ID int NOT NULL PRIMARY KEY,
@@ -1162,7 +1156,7 @@ INSERT INTO medical_schools_list(
 
 
 
-)
+);
 
 CREATE TABLE postgrad_exams_list(
     ID int NOT NULL PRIMARY KEY,
@@ -1199,7 +1193,6 @@ CREATE TABLE postgrad_exam_institutions_list(
     ID int NOT NULL PRIMARY KEY,
     postgrad_exam_institution VARCHAR(255) 
 );
-
 
 INSERT INTO postgrad_exam_institutions_list(
     ('Faculty of Dental Surgery'),
@@ -1302,8 +1295,7 @@ INSERT INTO specialities (speciality) VALUES (
 );
 
 
-INSERT INTO workplace_list (workplace) VALUES 
-(
+INSERT INTO workplace_list (workplace) VALUES (
     ('Airedale NHS Foundation Trust'),
     ('Alder Hey Children''s NHS Foundation Trust '),
     ('Ashford and St Peter''s Hospitals NHS Foundation Trust'),
@@ -16163,7 +16155,6 @@ INSERT INTO workplace_list (workplace) VALUES
 
 );
 
-
 INSERT INTO users (title, fullname, phone_number, current_job_title, current_job_workplace,current_job_start,
     current_job_speciality,
     previous_job_titles,
@@ -16185,15 +16176,18 @@ INSERT INTO users (title, fullname, phone_number, current_job_title, current_job
     connections,
     connection_requests,
     bio,
-    gmc_number) VALUES
-        (1, 'Tony Miles', 07740234556, 'Surgeon', 3, 'Jan-08-2020', 4, '{GP}', '{Jan-08-2018}', '{Jan-07-2020}',
-    4, 2, 5, 'Jan-08-2010', 'Jan-08-2015','{BMBS, BMBCH}','{1999-01-08, 2000-01-08}', '{Bedford Hospital NHS Trust}', 'London', '{Anaesthesia, Audiovestibular medicine}', 'email', true, true, '{Sarah Jones}', '{}', 'doctor with a keen interest in collaborating on research', 76895438
+    gmc_number) VALUES(
+        (1, 'Tony Miles', 07740234556, 1, 3, 'Jan-08-2020', 4, '{GP}', '{Jan-08-2018}', '{Jan-07-2020}',
+    4, 2, 5, 'Jan-08-2010', 'Jan-08-2015',7,'{1999-01-08, 2000-01-08}', '{Bedford Hospital NHS Trust}', 'London', '{Anaesthesia, Audiovestibular medicine}', 'email', true, true, '{Sarah Jones}', '{}', 'doctor with a keen interest in collaborating on research', 76895438
     ),
-    ('DR', 'Sarah Jones', 07740234556, 'Surgeon', 'West Suffolk NHS Foundation Trust', 'Jan-08-2020', 'Clinical radiology', '{GP}','{Jan-08-2018}', '{Jan-07-2020}',
-    'Clinical oncology', 'MBChB', 'Queen Mary (Barts)', 'Jan-08-2010', 'Jan-08-2015',
-    '{BMBS, BMBCH}','{1999-01-08, 2000-01-08}', '{Bedford Hospital NHS Trust}', 'London', '{Anaesthesia, Audiovestibular medicine}', 'email', TRUE, TRUE, '{Tony Miles}', '{}','doctor with a keen interest in collaborating on research', 76895438
+    ('DR', 'Sarah Jones', 07740234556, 2, 6, 'Jan-08-2020', 6, '{GP}','{Jan-08-2018}', '{Jan-07-2020}',
+    4, 8, 3, 'Jan-08-2010', 'Jan-08-2015',
+    3,'{1999-01-08, 2000-01-08}', '{Bedford Hospital NHS Trust}', 'London', '{Anaesthesia, Audiovestibular medicine}', 'email', TRUE, TRUE, '{Tony Miles}', '{}','doctor with a keen interest in collaborating on research', 76895438
     ),
-    ('DR', 'Joe Bloggs', 07740234556, 'Surgeon', 'West Suffolk NHS Foundation Trust', 'Jan-08-2020', 'Clinical radiology', '{GP}', '{Jan-08-2018}', '{Jan-07-2020}',
-    'Clinical oncology', 'MBChB', 'Queen Mary (Barts)', 'Jan-08-2010', 'Jan-08-2015',
-    '{BMBS, BMBCH}','{1999-01-08, 2000-01-08}', '{Bedford Hospital NHS Trust}', 'London', '{Anaesthesia, Audiovestibular medicine}', 'email', TRUE, FALSE, '{}', '{Tony Miles}', 'doctor with a keen interest in collaborating on research', 76895438
-);
+    ('DR', 'Joe Bloggs', 07740234556, 3, 10, 'Jan-08-2020', 1, '{GP}', '{Jan-08-2018}', '{Jan-07-2020}',
+    3, 2, 1, 'Jan-08-2010', 'Jan-08-2015',
+    7,'{1999-01-08, 2000-01-08}', '{Bedford Hospital NHS Trust}', 'London', '{Anaesthesia, Audiovestibular medicine}', 'email', TRUE, FALSE, '{}', '{Tony Miles}', 'doctor with a keen interest in collaborating on research', 76895438
+    )
+    );
+
+COMMIT;
