@@ -42,7 +42,7 @@
 		}
 	},
 	"lint-staged": {
-		"{*.js,sql,json,yml}": [
+		"*.{js,sql,json,yml}": [
 			"prettier --write"
 		]
 	}
