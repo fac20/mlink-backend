@@ -1,44 +1,128 @@
 BEGIN;
 
-DROP TABLE IF EXISTS users, CASCADE;
+DROP TABLE IF EXISTS users, job_titles, medical_schools, user_jobs, postgrad_exams, postgrad_exam_institutions, user_connections, user_connection_requests, user_postgrad_exams, specialities, degree_titles, workplaces, titles_list,  CASCADE;
 
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    fullname VARCHAR(255) NOT NULL,
-    title int FOREIGN KEY REFERENCES titles_list(ID),
-    phone_number INTEGER,
-    current_job_title int FOREIGN KEY REFERENCES job_titles(ID),
-    current_job_workplace int FOREIGN KEY REFERENCES workplace_list(ID),
-    current_job_start DATE,
-    current_job_speciality int FOREIGN KEY REFERENCES specialities(ID),
-    previous_job_titles VARCHAR(255)ARRAY,
-    previous_job_start DATE ARRAY,
-    previous_job_end DATE ARRAY,
-    previous_job_speciality int FOREIGN KEY REFERENCES specialities(ID),
-    degree_title int FOREIGN KEY REFERENCES degree_titles_list(ID),
-    medical_school int FOREIGN KEY REFERENCES medical_schools_list(ID),
-    degree_start DATE,
-    degree_end DATE,
-    postgrad_exams int FOREIGN KEY REFERENCES postgrad_exams_list(ID) ARRAY,
-    postgrad_exams_date DATE ARRAY,
-    postgrad_exam_institutions VARCHAR(255) ARRAY,
-    current_location VARCHAR(255),
-    interested_specialities VARCHAR(255) ARRAY,
-    contact_preference VARCHAR(255),
-    open_to_collaboration boolean,
-    open_to_giving_advice boolean,
-    connections VARCHAR(255) ARRAY,
-    connection_requests VARCHAR(255) ARRAY,
-    bio VARCHAR(255),
-    gmc_number INTEGER
+CREATE TABLE "users" (
+  "id" SERIAL PRIMARY KEY,
+  "full_name" varchar,
+  "gmc_number" text,
+  "title" int,
+  "email" varchar,
+  "phone_number" text,
+  "current_job_title" int,
+  "current_job_workplace" int,
+  "current_job_start" date,
+  "current_job_speciality" int,
+  "degree_title" int,
+  "medical_school" int,
+  "degree_start" date,
+  "degree_end" date,
+  "current_location" varchar,
+  "open_to_collaboration" boolean,
+  "open_to_giving_advice" boolean,
+  "bio" varchar
 );
 
-CREATE TABLE job_titles (
-    ID int NOT NULL PRIMARY KEY,
-    job_title VARCHAR(255)
-)
+CREATE TABLE "workplaces" (
+  "id" SERIAL PRIMARY KEY,
+  "workplace" varchar
+);
 
-INSERT INTO job_titles(job_title) VALUES (
+CREATE TABLE "job_titles" (
+  "id" SERIAL PRIMARY KEY,
+  "job_title" varchar
+);
+
+CREATE TABLE "medical_schools" (
+  "id" SERIAL PRIMARY KEY,
+  "medical_school" varchar
+);
+
+CREATE TABLE "user_jobs" (
+  "id" SERIAL PRIMARY KEY,
+  "user_id" int,
+  "job_id" int,
+  "job_start" date,
+  "job_end" date,
+  "speciality" int
+);
+
+CREATE TABLE "postgrad_exams" (
+  "id" SERIAL PRIMARY KEY,
+  "postgrad_exam" varchar
+);
+
+CREATE TABLE "postgrad_exam_institutions" (
+  "id" SERIAL PRIMARY KEY,
+  "postgrad_exam_institution" varchar
+);
+
+CREATE TABLE "user_connections" (
+  "user_a" int,
+  "user_b" int
+);
+
+CREATE TABLE "user_connection_requests" (
+  "requester" int,
+  "requestee" int
+);
+
+CREATE TABLE "user_postgrad_exams" (
+  "user_id" int,
+  "postgrad_exam_id" int,
+  "postgrad_exam_institution_id" int,
+  "exam_date" date,
+  PRIMARY KEY (user_id, postgrad_exam_id, postgrad_exam_institution_id)
+);
+
+CREATE TABLE "specialities" (
+  "id" SERIAL PRIMARY KEY,
+  "speciality" varchar
+);
+
+CREATE TABLE "titles_list" (
+  "id" SERIAL PRIMARY KEY,
+  "title" varchar
+);
+
+CREATE TABLE "degree_titles" (
+  "id" SERIAL PRIMARY KEY,
+  "degree_name" varchar
+);
+
+ALTER TABLE "users" ADD FOREIGN KEY ("current_job_title") REFERENCES "job_titles" ("id");
+
+ALTER TABLE "users" ADD FOREIGN KEY ("current_job_workplace") REFERENCES "workplaces" ("id");
+
+ALTER TABLE "users" ADD FOREIGN KEY ("current_job_speciality") REFERENCES "specialities" ("id");
+
+ALTER TABLE "users" ADD FOREIGN KEY ("title") REFERENCES "titles_list" ("id");
+
+ALTER TABLE "users" ADD FOREIGN KEY ("degree_title") REFERENCES "degree_titles" ("id");
+
+ALTER TABLE "users" ADD FOREIGN KEY ("medical_school") REFERENCES "medical_schools" ("id");
+
+ALTER TABLE "user_jobs" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+
+ALTER TABLE "user_jobs" ADD FOREIGN KEY ("job_id") REFERENCES "job_titles" ("id");
+
+ALTER TABLE "user_jobs" ADD FOREIGN KEY ("speciality") REFERENCES "specialities" ("id");
+
+ALTER TABLE "user_connections" ADD FOREIGN KEY ("user_a") REFERENCES "users" ("id");
+
+ALTER TABLE "user_connections" ADD FOREIGN KEY ("user_b") REFERENCES "users" ("id");
+
+ALTER TABLE "user_connection_requests" ADD FOREIGN KEY ("requester") REFERENCES "users" ("id");
+
+ALTER TABLE "user_connection_requests" ADD FOREIGN KEY ("requestee") REFERENCES "users" ("id");
+
+ALTER TABLE "user_postgrad_exams" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+
+ALTER TABLE "user_postgrad_exams" ADD FOREIGN KEY ("postgrad_exam_id") REFERENCES "postgrad_exams" ("id");
+
+ALTER TABLE "user_postgrad_exams" ADD FOREIGN KEY ("postgrad_exam_institution_id") REFERENCES "postgrad_exam_institutions" ("id");
+
+INSERT INTO job_titles (job_title) VALUES
     ('FY 1'),
     ('FY 2'),
     ('IMT 1'),
@@ -66,54 +150,25 @@ INSERT INTO job_titles(job_title) VALUES (
     ('CT 3'),
     ('Out-of-training Doctor'),
     ('Non-clinical Doctor'),
-    ('\NOT ENTERED YET'),
-)
+    ('NOTENTERED YET')
+;
 
-CREATE TABLE specialities(
-    ID int NOT NULL PRIMARY KEY,
-    speciality VARCHAR(255)
-)
-
-
-CREATE TABLE workplace_list (
-    ID int NOT NULL PRIMARY KEY,
-    workplace VARCHAR(255)
-);
-
-
-CREATE TABLE titles_list (
-    ID int NOT NULL PRIMARY KEY,
-    title VARCHAR(255)
-);
-
-
-INSERT INTO titles_list (title) VALUES (
+INSERT INTO titles_list (title) VALUES 
     ('Dr'),
     ('Prof'),
     ('Mr'),
     ('Miss'),
-    ('Ms'),
-);
+    ('Ms')
+;
 
-CREATE TABLE degree_titles_list(
-    ID int NOT NULL PRIMARY KEY,
-    degree_title VARCHAR(255)
-);
-
-INSERT INTO degree_titles_list (degree_title) VALUES (
+INSERT INTO degree_titles (degree_name) VALUES 
     ('MBChB'),
     ('BM BCh'),
     ('BMBS'),
     ('MBBS')
-);
+;
 
-CREATE TABLE medical_schools_list(
-    ID int NOT NULL PRIMARY KEY,
-    medical_school VARCHAR(255)
-);
-
-
-INSERT INTO medical_schools_list(
+INSERT INTO medical_schools(medical_school) VALUES 
         ('Anglia Ruskin University School of Medicine, United Kingdom of Great Britain and Northern Ireland'),
         ('Aston Medical School, United Kingdom of Great Britain and Northern Ireland'),
         ('Barts and the London School of Medicine and Dentistry, United Kingdom of Great Britain and Northern Ireland'),
@@ -1158,19 +1213,13 @@ INSERT INTO medical_schools_list(
         ('Université de Montréal Faculté de Médecine, Canada'),
         ('Université de Sherbrooke Faculté de Médecine et des Sciences de la Santé, Canada'),
         ('Université Laval Faculté de Médecine, Canada'),
-        ('\NOT ADDED YET, \NOT ADDED YET')
+        ('NOTADDED YET, NOTADDED YET')
 
 
 
-)
+;
 
-CREATE TABLE postgrad_exams_list(
-    ID int NOT NULL PRIMARY KEY,
-    postgrad_exam VARCHAR(255) 
-);
-
-INSERT INTO postgrad_exams_list (postgrad_exam) VALUES
-(
+INSERT INTO postgrad_exams (postgrad_exam) VALUES 
     ('FRCA'),
     ('MCEM'),
     ('nMRCGP'),
@@ -1191,17 +1240,11 @@ INSERT INTO postgrad_exams_list (postgrad_exam) VALUES
     ('FRCOphth'),
     ('FRCPCH'),
     ('FRCP'),
-    ('FRCPsych'),
-    
-);
-
-CREATE TABLE postgrad_exam_institutions_list(
-    ID int NOT NULL PRIMARY KEY,
-    postgrad_exam_institution VARCHAR(255) 
-);
+    ('FRCPsych')
+;
 
 
-INSERT INTO postgrad_exam_institutions_list(
+INSERT INTO postgrad_exam_institutions(postgrad_exam_institution) VALUES 
     ('Faculty of Dental Surgery'),
     ('Faculty of Intensive Care Medicine'),
     ('Faculty of Occupational Medicine'),
@@ -1224,14 +1267,10 @@ INSERT INTO postgrad_exam_institutions_list(
     ('Royal College of Surgeons in Ireland'),
     ('Royal College of Surgeons of Edinburgh'),
     ('Royal College of Surgeons of England'),
-    ('\NOT ADDED YET'),
-)
-CREATE TABLE specialities (
-    ID int NOT NULL PRIMARY KEY,
-    speciality VARCHAR(255)
-);
+    ('NOTADDED YET')
+;
 
-INSERT INTO specialities (speciality) VALUES (
+INSERT INTO specialities (speciality) VALUES 
     ('Anaesthesia'),
     ('Clinical oncology'),
     ('Clinical radiology'),
@@ -1298,12 +1337,11 @@ INSERT INTO specialities (speciality) VALUES (
     ('Plastic surgery'),
     ('Trauma and orthopaedic surgery'),
     ('Urology'),
-    ('Vascular surgery'),
-);
+    ('Vascular surgery')
+;
 
 
-INSERT INTO workplace_list (workplace) VALUES 
-(
+INSERT INTO workplaces (workplace) VALUES 
     ('Airedale NHS Foundation Trust'),
     ('Alder Hey Children''s NHS Foundation Trust '),
     ('Ashford and St Peter''s Hospitals NHS Foundation Trust'),
@@ -4967,7 +5005,7 @@ INSERT INTO workplace_list (workplace) VALUES
     ('HOLBORN MEDICAL CENTRE, HOLBORN'),
     ('BRONDESBURY MEDICAL CENTRE, LONDON'),
     ('THE NORTHERN MEDICAL CENTRE, LONDON'),
-    ('MUSEUM PRACTICE, '),
+    ('MUSEUM PRACTICE'),
     ('KILLICK STREET HEALTH CENTRE, LONDON'),
     ('CITY ROAD MEDICAL CENTRE, CITY HSE.,190-196 CITY RD'),
     ('WESTFIELD MEDICAL CENTRE, LONDON'),
@@ -16161,39 +16199,37 @@ INSERT INTO workplace_list (workplace) VALUES
     ('HERTFORD & RURALS PCN HUB, HERTFORD'),
     ('AIREDALE AND CRAVEN EIP, KEIGHLEY')
 
-);
+;
+
+INSERT INTO users (full_name, gmc_number, title, email, phone_number, current_job_title, current_job_workplace, current_job_start, current_job_speciality, degree_title, medical_school, degree_start, degree_end, current_location, open_to_collaboration, open_to_giving_advice, bio) VALUES 
+    ('Jane Doe', '2354098', 1, 'jane@gmail.com', '+44 (0) 7988 777 222', 3, 5, '08-Jan-2019', 2, 2, 4, '08-Jan-2012', '08-Jan-2016', 'London', true, false, 'hi there i''m a doctor'),
+    ('John Doe', '23544566', 2, 'john@gmail.com', '07988 333 555', 2, 5, '08-Jan-2019', 2, 2, 4, '08-Jan-2012', '08-Jan-2016', 'Liverpool', true, false, 'hi there i''m a Lion'),
+    ('Tony Tiger', '2354766', 4, 'johnnfn@gmail.com', '07988 333 555', 7, 1, '08-Jan-2019', 2, 3, 4, '08-Jan-2012', '08-Jan-2016', 'London', true, false, 'hi there i''m a Tiger'),
+    ('Barney The Dinosaur', '3454466', 3, 'khadija@gmail.com', '07567227789', 5, 5, '04-April-2019', 2, 2, 4, '08-Jan-2011', '08-Jan-2015', 'Manchester', true, true, 'hi there i''m a dinosuar')
+;
+
+INSERT INTO user_connections (user_a, user_b) VALUES 
+    (1,2),
+    (2,4),
+    (3,2)
+;
 
 
-INSERT INTO users (title, fullname, phone_number, current_job_title, current_job_workplace,current_job_start,
-    current_job_speciality,
-    previous_job_titles,
-    previous_job_start,
-    previous_job_end,
-    previous_job_speciality,
-    degree_title ,
-    medical_school,
-    degree_start,
-    degree_end,
-    postgrad_exams,
-    postgrad_exams_date,
-    postgrad_exam_institutions,
-    current_location,
-    interested_specialities,
-    contact_preference,
-    open_to_collaboration,
-    open_to_giving_advice,
-    connections,
-    connection_requests,
-    bio,
-    gmc_number) VALUES
-        (1, 'Tony Miles', 07740234556, 'Surgeon', 3, 'Jan-08-2020', 4, '{GP}', '{Jan-08-2018}', '{Jan-07-2020}',
-    4, 2, 5, 'Jan-08-2010', 'Jan-08-2015','{BMBS, BMBCH}','{1999-01-08, 2000-01-08}', '{Bedford Hospital NHS Trust}', 'London', '{Anaesthesia, Audiovestibular medicine}', 'email', true, true, '{Sarah Jones}', '{}', 'doctor with a keen interest in collaborating on research', 76895438
-    ),
-    ('DR', 'Sarah Jones', 07740234556, 'Surgeon', 'West Suffolk NHS Foundation Trust', 'Jan-08-2020', 'Clinical radiology', '{GP}','{Jan-08-2018}', '{Jan-07-2020}',
-    'Clinical oncology', 'MBChB', 'Queen Mary (Barts)', 'Jan-08-2010', 'Jan-08-2015',
-    '{BMBS, BMBCH}','{1999-01-08, 2000-01-08}', '{Bedford Hospital NHS Trust}', 'London', '{Anaesthesia, Audiovestibular medicine}', 'email', TRUE, TRUE, '{Tony Miles}', '{}','doctor with a keen interest in collaborating on research', 76895438
-    ),
-    ('DR', 'Joe Bloggs', 07740234556, 'Surgeon', 'West Suffolk NHS Foundation Trust', 'Jan-08-2020', 'Clinical radiology', '{GP}', '{Jan-08-2018}', '{Jan-07-2020}',
-    'Clinical oncology', 'MBChB', 'Queen Mary (Barts)', 'Jan-08-2010', 'Jan-08-2015',
-    '{BMBS, BMBCH}','{1999-01-08, 2000-01-08}', '{Bedford Hospital NHS Trust}', 'London', '{Anaesthesia, Audiovestibular medicine}', 'email', TRUE, FALSE, '{}', '{Tony Miles}', 'doctor with a keen interest in collaborating on research', 76895438
-);
+INSERT INTO user_connection_requests (requester, requestee) VALUES
+    (1, 3),
+    (3, 2),
+    (4, 3)
+;
+
+
+INSERT INTO user_postgrad_exams (user_id, postgrad_exam_id, postgrad_exam_institution_id, exam_date) VALUES 
+    (1, 2, 5, '08-Jan-2010'),
+    (2, 3, 4, '17-Feb-2009')
+;
+
+INSERT INTO user_jobs (user_id, job_id, job_start, job_end, speciality) VALUES
+    (4, 5, '17-Feb-2009', '17-Feb-2011', 4),
+    (2, 3, '17-Feb-2003', '17-Feb-2009', 3)
+;
+
+COMMIT;
