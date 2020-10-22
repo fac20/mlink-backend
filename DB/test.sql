@@ -1,14 +1,14 @@
 BEGIN;
 
-DROP TABLE IF EXISTS users, job_titles, medical_schools, user_jobs, postgrad_exams, postgrad_exam_institutions, user_connections, user_connection_requests, user_postgrad_exams, specialities, degree_titles  CASCADE;
+DROP TABLE IF EXISTS users, job_titles, medical_schools, user_jobs, postgrad_exams, postgrad_exam_institutions, user_connections, user_connection_requests, user_postgrad_exams, specialities, degree_titles, workplaces, titles_list,  CASCADE;
 
 CREATE TABLE "users" (
   "id" SERIAL PRIMARY KEY,
   "full_name" varchar,
-  "gmc_number" bigint,
+  "gmc_number" text,
   "title" int,
   "email" varchar,
-  "phone_number" int,
+  "phone_number" text,
   "current_job_title" int,
   "current_job_workplace" int,
   "current_job_start" date,
@@ -42,8 +42,8 @@ CREATE TABLE "user_jobs" (
   "id" SERIAL PRIMARY KEY,
   "user_id" int,
   "job_id" int,
-  "start" date,
-  "end" date,
+  "job_start" date,
+  "job_end" date,
   "speciality" int
 );
 
@@ -58,21 +58,20 @@ CREATE TABLE "postgrad_exam_institutions" (
 );
 
 CREATE TABLE "user_connections" (
-  "user_one" int,
-  "user_two" int
+  "user_a" int,
+  "user_b" int
 );
 
 CREATE TABLE "user_connection_requests" (
-  "requesting" int,
-  "requested" int
+  "requester" int,
+  "requestee" int
 );
 
 CREATE TABLE "user_postgrad_exams" (
   "user_id" int,
   "postgrad_exam_id" int,
   "postgrad_exam_institution_id" int,
-  "start" date,
-  "end" date,
+  "exam_date" date,
   PRIMARY KEY (user_id, postgrad_exam_id, postgrad_exam_institution_id)
 );
 
@@ -109,13 +108,13 @@ ALTER TABLE "user_jobs" ADD FOREIGN KEY ("job_id") REFERENCES "job_titles" ("id"
 
 ALTER TABLE "user_jobs" ADD FOREIGN KEY ("speciality") REFERENCES "specialities" ("id");
 
-ALTER TABLE "user_connections" ADD FOREIGN KEY ("user_one") REFERENCES "users" ("id");
+ALTER TABLE "user_connections" ADD FOREIGN KEY ("user_a") REFERENCES "users" ("id");
 
-ALTER TABLE "user_connections" ADD FOREIGN KEY ("user_two") REFERENCES "users" ("id");
+ALTER TABLE "user_connections" ADD FOREIGN KEY ("user_b") REFERENCES "users" ("id");
 
-ALTER TABLE "user_connection_requests" ADD FOREIGN KEY ("requesting") REFERENCES "users" ("id");
+ALTER TABLE "user_connection_requests" ADD FOREIGN KEY ("requester") REFERENCES "users" ("id");
 
-ALTER TABLE "user_connection_requests" ADD FOREIGN KEY ("requested") REFERENCES "users" ("id");
+ALTER TABLE "user_connection_requests" ADD FOREIGN KEY ("requestee") REFERENCES "users" ("id");
 
 ALTER TABLE "user_postgrad_exams" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
@@ -16203,8 +16202,34 @@ INSERT INTO workplaces (workplace) VALUES
 ;
 
 INSERT INTO users (full_name, gmc_number, title, email, phone_number, current_job_title, current_job_workplace, current_job_start, current_job_speciality, degree_title, medical_school, degree_start, degree_end, current_location, open_to_collaboration, open_to_giving_advice, bio) VALUES 
-    ('Jane Doe', 2354, 1, 'jane@gmail.com', 07988, 3, 5, '08-Jan-2019', 2, 2, 4, '08-Jan-2012', '08-Jan-2016', 'London', true, false, 'hi there i''m a doctor'),
-    ('John Doe', 2354, 2, 'john@gmail.com', 07988, 3, 5, '08-Jan-2019', 2, 2, 4, '08-Jan-2012', '08-Jan-2016', 'London', true, false, 'hi there i''m a doctor')
+    ('Jane Doe', '2354098', 1, 'jane@gmail.com', '+44 (0) 7988 777 222', 3, 5, '08-Jan-2019', 2, 2, 4, '08-Jan-2012', '08-Jan-2016', 'London', true, false, 'hi there i''m a doctor'),
+    ('John Doe', '23544566', 2, 'john@gmail.com', '07988 333 555', 2, 5, '08-Jan-2019', 2, 2, 4, '08-Jan-2012', '08-Jan-2016', 'Liverpool', true, false, 'hi there i''m a Lion'),
+    ('Tony Tiger', '2354766', 4, 'johnnfn@gmail.com', '07988 333 555', 7, 1, '08-Jan-2019', 2, 3, 4, '08-Jan-2012', '08-Jan-2016', 'London', true, false, 'hi there i''m a Tiger'),
+    ('Barney The Dinosaur', '3454466', 3, 'khadija@gmail.com', '07567227789', 5, 5, '04-April-2019', 2, 2, 4, '08-Jan-2011', '08-Jan-2015', 'Manchester', true, true, 'hi there i''m a dinosuar')
 ;
 
-INSERT INTO user_connections (user_one, user_two) VALUES (1,2);
+INSERT INTO user_connections (user_a, user_b) VALUES 
+    (1,2),
+    (2,4),
+    (3,2)
+;
+
+
+INSERT INTO user_connection_requests (requester, requestee) VALUES
+    (1, 3),
+    (3, 2),
+    (4, 3)
+;
+
+
+INSERT INTO user_postgrad_exams (user_id, postgrad_exam_id, postgrad_exam_institution_id, exam_date) VALUES 
+    (1, 2, 5, '08-Jan-2010'),
+    (2, 3, 4, '17-Feb-2009')
+;
+
+INSERT INTO user_jobs (user_id, job_id, job_start, job_end, speciality) VALUES
+    (4, 5, '17-Feb-2009', '17-Feb-2011', 4),
+    (2, 3, '17-Feb-2003', '17-Feb-2009', 3)
+;
+
+COMMIT;
