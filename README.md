@@ -30,3 +30,6 @@ Go on this link: https://tfb-mlink.herokuapp.com/console
 #### Here's a quick example of what you can do:
 
 ![hasura](https://user-images.githubusercontent.com/59174800/96913519-a2dfe280-149b-11eb-806c-cdecc4942413.PNG)
+
+### Database schema
+![Screenshot 2020-10-23 at 11 35 04](https://user-images.githubusercontent.com/36554605/97027408-979bbe00-1552-11eb-8808-523c3a52b2e0.png)
