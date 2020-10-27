@@ -1,6 +1,6 @@
 # mlink-backend
 
-This repo contains the database files for Mlink which is a networking platform for medical proffessionals
+This repo contains the database files for Mlink which is a networking platform for medical professionals
 
 ## Set-up
 
