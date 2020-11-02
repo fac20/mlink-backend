@@ -22,38 +22,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package-lock.json" }}
           paths:
             - ~/project/node_modules
-      - run:
-          name: run tests
-          command: npm run test
-
-  Coverage:
-    docker:
-      - image: circleci/node:14.5.0
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Run tests and generate coverage report
-          command: npm test -- --coverage --watchAll=false
-      - codecov/upload:
-          file: './coverage/clover.xml'
-          token: ${CODECOV_TOKEN}
-      comment:
-        layout: "reach, diff, flags, files"
-        behavior: default
-        require_changes: false  # if true: only post the comment if coverage changes
-        require_base: no        # [yes :: must have a base report to post]
-        require_head: yes       # [yes :: must have a head report to post]
-        branches:               # branch names that can post comment
-          - "main"
-      wait_for_ci_to_pass: false
-
-      
 workflows:
   push:
     jobs:
       - Installation
-      - coverage:
-          requires:
-            installation
-            
